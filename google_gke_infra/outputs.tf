@@ -31,7 +31,7 @@ output "network_name" {
 }
 
 output "network_self_link" {
-  value = google_compute_network.vpc[0].self_link
+  value = google_compute_network.vpc.*.self_link
 }
 
 output "subnet_name" {
