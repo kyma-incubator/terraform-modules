@@ -1,0 +1,97 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: updating-network-policies
+  namespace: kube-system
+
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: updating-network-policies
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - "networking.k8s.io"
+  resources:
+  - networkpolicies
+  verbs:
+  - get
+  - list
+  - patch
+  - update
+  - create
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - get
+  - list
+
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: updating-network-policies
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: updating-network-policies
+subjects:
+- kind: ServiceAccount
+  name: updating-network-policies
+  namespace: kube-system
+
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: deny-metadata
+  namespace: kube-system
+data:
+  networkpolicy: |-
+    kind: NetworkPolicy
+    apiVersion: networking.k8s.io/v1
+    metadata:
+      name: deny-metadata
+    spec:
+      podSelector: {}
+      egress:
+      - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except:
+            - 169.254.169.254/32
+      policyTypes:
+      - Egress
+
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: updating-network-policies
+  namespace: kube-system
+spec:
+  schedule: "*/15 * * * *"  #15 mins
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: networkpolicy
+            image: teamidefix/k8s_networkpolicies:0.1.0
+          restartPolicy: OnFailure
+          serviceAccount: updating-network-policies
+          serviceAccountName: updating-network-policies
