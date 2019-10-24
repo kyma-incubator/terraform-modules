@@ -4,7 +4,7 @@
 
 ## Overview
 
-The Terraform Modules are providing ready to use [modules](https://www.terraform.io/docs/configuration/modules.html) for [Terraform](https://www.terraform.io/downloads.html), containing all needed resources to provision a [Kubernetes](https://kubernetes.io) cluster on different cloud providers. 
+The Terraform Modules are providing ready to use [modules](https://www.terraform.io/docs/configuration/modules.html) for [Terraform](https://www.terraform.io/downloads.html), containing all needed resources to provision a [Kubernetes](https://kubernetes.io) cluster on different cloud providers.
 
 ## Prerequisites
 
