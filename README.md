@@ -1,7 +1,6 @@
 
 # Terraform Modules
 
-
 ## Overview
 
 The Terraform Modules are providing ready to use [modules](https://www.terraform.io/docs/configuration/modules.html) for [Terraform](https://www.terraform.io/downloads.html), containing all needed resources to provision a [Kubernetes](https://kubernetes.io) cluster on different cloud providers.
@@ -16,7 +15,8 @@ The Terraform Modules are providing ready to use [modules](https://www.terraform
 
 ## Usage
 
-Basic usage looks like that:
+Basic usage looks like this:
+
 ```hcl
 module "k8s" {
   source  = "git::https://github.com/kyma-incubator/terraform-modules//google_gke_infra?ref=v0.0.1"
