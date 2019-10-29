@@ -113,7 +113,7 @@ By default, the basic module configuration creates a [Private GKE Cluster](https
 
 ### Use the cluster as a Terraform provider
 
-In the same Terraform file, you can use the cluster created by modules by adding the following resources to your `main.tf` file:
+In the same Terraform file, you can use the cluster created by this module by adding the following resources to your `main.tf` file:
 
 ```hcl
 # Pull Access Token from gcloud client config
@@ -137,7 +137,7 @@ This GKE module exposes two variables that allow you to create and destroy custo
 - **k8s_resources_to_create**
 - **k8s_resources_to_destroy**
 
-These variables expect a list of Base64 encoded manifests and will apply/destroy them respectively. You can use a setup like the following in your Terraform plan:
+These variables expect a list of base64-encoded manifests and will apply/destroy them respectively. You can use a setup like the following in your Terraform plan:
 
 ```hcl
 module "k8s" {
