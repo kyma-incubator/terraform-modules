@@ -1,0 +1,36 @@
+---
+driver:
+  name: terraform
+  root_module_directory: test/fixtures/tf_module
+  parallelism: 4
+  command_timeout: 3600
+  variables:
+    client_id: "<%= ENV['AZURE_CLIENT_ID'] %>"
+    client_secret: "<%= ENV['AZURE_CLIENT_SECRET'] %>"
+    subscription_id: "<%= ENV['AZURE_SUBSCRIPTION_ID'] %>"
+    tenant_id: "<%= ENV['AZURE_TENANT_ID'] %>"
+    cluster_name: "kitchen-test"
+    dns_prefix: "kitchen-dns"
+    location: "northeurope"
+    log_analytics_workspace_name: "kitchen-ws"
+    resource_group: "kitchen-rg"
+    
+provisioner:
+  name: terraform
+
+verifier:
+  name: terraform
+
+platforms:
+  - name: aks
+    verifier:
+      systems:
+        - name: aks
+          backend: azure
+          profile_locations:
+            - test/integration
+          controls:
+            - aks-001
+
+suites:
+  - name: aks_test
