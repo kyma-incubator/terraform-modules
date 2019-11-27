@@ -1,11 +1,11 @@
 ### mandatory vars ###
 variable "subscription_id" {
   type        = string
-  description = "azurerem provider subscription_id"
+  description = "azurerm provider subscription_id"
 }
 variable "tenant_id" {
   type        = string
-  description = "azurerem provider tenant_id"
+  description = "azurerm provider tenant_id"
 }
 variable "client_id" {
   type        = string
@@ -13,7 +13,7 @@ variable "client_id" {
 }
 variable "client_secret" {
   type        = string
-  description = "Kubernetes service principal client secret and azurerem provider client_secret"
+  description = "Kubernetes service principal client secret and azurerm provider client_secret"
 }
 variable "dns_prefix" {
   type        = string
@@ -33,6 +33,7 @@ variable "location" {
 }
 variable "log_analytics_workspace_name" {
   type = string
+  description = "The name of the Log Analytics Workspace"
 }
 
 ### optional vars ###
@@ -48,7 +49,7 @@ variable "agent_count" {
 }
 variable "agent_vm_size" {
   type        = string
-  description = "The size of the virtual machines "
+  description = "The size of the virtual machines"
   default     = "Standard_DS3_v2"
 }
 variable "agent_os_type" {
@@ -57,17 +58,17 @@ variable "agent_os_type" {
   default     = "Linux"
 }
 variable "kubernetes_version" {
-  description = "Version of the Kubernetes (https://aka.ms/supported-version-list)"
-  type        = string
+  type        = string  
+  description = "Version of Kubernetes (https://aka.ms/supported-version-list)"
   default     = "1.12.8"
 }
 variable "agent_disk_size" {
-  description = "The OSDiskSize for Agent agentpool cannot be less than 30GB or larger than 2048GB"
-  type        = number
+  type        = number  
+  description = "The OSDiskSize for Agent (agentpool cannot be less than 30GB or larger than 2048GB)"
   default     = 30
 }
 variable "log_analytics_workspace_sku" {
-  description = "The pricing level of the Log Analytics workspace (https://azure.microsoft.com/pricing/details/monitor)"
   type        = string
+  description = "The pricing level of the Log Analytics workspace (https://azure.microsoft.com/pricing/details/monitor)"
   default     = "PerGB2018"
 }
