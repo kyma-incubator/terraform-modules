@@ -1,0 +1,15 @@
+name: cx-inspec-aks
+title: InSpec Profile
+maintainer: Mark Simon
+copyright: SAP SE
+copyright_email: mark.simon@sap.com
+license: Apache-2.0
+summary: Verifying aks cluster
+depends:
+  - name: inspec-azure
+    url: https://github.com/inspec/inspec-azure/archive/v1.4.2.tar.gz
+supports:
+  - platform: azure
+attributes:
+  - name: resource_group
+  - name: cluster_name

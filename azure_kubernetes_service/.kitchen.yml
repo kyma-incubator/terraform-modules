@@ -28,7 +28,7 @@ platforms:
         - name: aks
           backend: azure
           profile_locations:
-            - test/integration
+            - test/integration/default
           controls:
             - aks-001
 
