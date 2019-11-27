@@ -137,9 +137,5 @@ To perform a test with `kitchen-terraform`  the [inspec](https://www.inspec.io/)
 * `AZURE_TENANT_ID`
 
 Once configured a test can be executed with the `kitchen test` command which will go through the following phases:
-|  kitchen        | terraform / inspec  |
-| :-------------- | :------------------ |
-|`kitchen create` |`terraform init`|
-|`kitchen converge` |`terraform apply`|
-|`kitchen verify` |`inspec exec`|
-|`kitchen destroy` |`terraform destroy`|
+* `kitchen create` -> `kitchen converge` -> `kitchen verify` -> `kitchen destroy`
+* `terraform init` -> `terraform apply` -> `inspec exec` -> `terraform destroy`
