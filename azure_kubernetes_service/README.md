@@ -13,7 +13,7 @@ Terraform module for creating Azure Kubernetes Service (AKS)
 ## Prerequisites
 * Azure needs to be configured with proper subscription, tenant and client configurations
 ### Variables
-```json
+```hcl
 variable "subscription_id" {
   type        = string
   description = "azurerem provider subscription_id"
@@ -52,7 +52,7 @@ variable "log_analytics_workspace_name" {
 }
 ```
 ## Optional variables
-```json
+```hcl
 variable "tags" {
   type        = map(string)
   description = "Tags to assign to the 'azurerm_kubernetes_cluster'"
@@ -137,9 +137,9 @@ To perform a test with `kitchen-terraform`  the [inspec](https://www.inspec.io/)
 * `AZURE_TENANT_ID`
 
 Once configured a test can be executed with the `kitchen test` command which will go through the following phases:
-|  kitchen         |terraform / inspec                          |
-|------------------|------------------|
-|`kitchen create`|`terraform init`|
-|`kitchen converge`|`terraform apply`|
-|`kitchen verify`|`inspec exec`|
-|`kitchen destroy`|`terraform destroy`|
+|  kitchen        | terraform / inspec  |
+| :-------------- | :------------------ |
+|`kitchen create` |`terraform init`|
+|`kitchen converge` |`terraform apply`|
+|`kitchen verify` |`inspec exec`|
+|`kitchen destroy` |`terraform destroy`|
