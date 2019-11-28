@@ -6,7 +6,7 @@ provider "azurerm" {
   tenant_id       = var.tenant_id
 }
 
-module "azure-kubernetes-service" {
+module "azurerm_kubernetes_cluster" {
   source                       = "../../.."
   client_id                    = var.client_id
   client_secret                = var.client_secret

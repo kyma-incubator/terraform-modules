@@ -7,7 +7,7 @@ Terraform module for creating Azure Kubernetes Service (AKS)
 
 * create a dedicated resource group
 * create `Log Analytics Workspace`
-* configure `Log Analitcs Solution`
+* configure `Log Analytics Solution`
 * create a managed kubernetes cluster
 
 ## Prerequisites
@@ -16,11 +16,11 @@ Terraform module for creating Azure Kubernetes Service (AKS)
 ```hcl
 variable "subscription_id" {
   type        = string
-  description = "azurerem provider subscription_id"
+  description = "azurerm provider subscription_id"
 }
 variable "tenant_id" {
   type        = string
-  description = "azurerem provider tenant_id"
+  description = "azurerm provider tenant_id"
 }
 variable "client_id" {
   type        = string
@@ -28,7 +28,7 @@ variable "client_id" {
 }
 variable "client_secret" {
   type        = string
-  description = "Kubernetes service principal client secret and azurerem provider client_secret"
+  description = "Kubernetes service principal client secret and azurerm provider client_secret"
 }
 variable "dns_prefix" {
   type        = string
@@ -44,7 +44,7 @@ variable "resource_group" {
 }
 variable "location" {
   type        = string
-  description = "The location of the kubernetes clutser deployment"
+  description = "The location of the kubernetes cluster deployment"
 }
 variable "log_analytics_workspace_name" {
   type        = string
@@ -65,7 +65,7 @@ variable "agent_count" {
 }
 variable "agent_vm_size" {
   type        = string
-  description = "The size of the virtual machines "
+  description = "The size of the virtual machines"
   default     = "Standard_DS3_v2"
 }
 variable "agent_os_type" {
@@ -130,7 +130,7 @@ platforms:
 suites:
   - name: aks_test
 ```
-To perform a test with `kitchen-terraform`  the [inspec](https://www.inspec.io/) and [kitchen-terraform](https://newcontext-oss.github.io/kitchen-terraform/) tools are necessary to be installed. Also the following variables are necessary to be exported to `env` (these variables are used both by `terraform` and `inspec`)
+To perform a test with `kitchen-terraform` the [inspec](https://www.inspec.io/) and [kitchen-terraform](https://newcontext-oss.github.io/kitchen-terraform/) tools are necessary to be installed. Also the following variables are necessary to be exported to `env` (these variables are used both by `terraform` and `inspec`)
 * `AZURE_CLIENT_ID`
 * `AZURE_CLIENT_SECRET`
 * `AZURE_SUBSCRIPTION_ID`
@@ -138,4 +138,5 @@ To perform a test with `kitchen-terraform`  the [inspec](https://www.inspec.io/)
 
 Once configured a test can be executed with the `kitchen test` command which will go through the following phases:
 * `kitchen create` -> `kitchen converge` -> `kitchen verify` -> `kitchen destroy`
+which basically corresponds to:
 * `terraform init` -> `terraform apply` -> `inspec exec` -> `terraform destroy`
