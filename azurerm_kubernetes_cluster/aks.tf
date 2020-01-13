@@ -55,5 +55,10 @@ resource "azurerm_kubernetes_cluster" "k8s" {
       log_analytics_workspace_id = azurerm_log_analytics_workspace.log-workspace.id
     }
   }
+
+  role_based_access_control {
+    enabled = true
+  }
+
   tags = var.tags
 }
