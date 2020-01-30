@@ -12,7 +12,7 @@ Use the following links to navigate through the document.
     - [Use the cluster as a Terraform provider](#use-the-cluster-as-a-terraform-provider)
     - [Deploy custom Kubernets resources](#deploy-custom-kubernetes-resources)
     - [Upgrade a cluster](#upgrade-a-cluster)
-      - [Update **k8s_version**](#update-k8sversion)
+      - [Update **kubernetes_version**](#update-kubernetes-version)
       - [Update **node_version**](#update-nodeversion)
   - [Variables](#variables)
     - [Required variables](#required-variables)
@@ -156,7 +156,7 @@ module "k8s" {
 
 The GKE module exposes two variables to allow the separate upgrade of the Control Plane and Nodes.
 
-#### Update **k8s_version**
+#### Update **kubernetes-version**
 
 >**NOTE:** This value configures the version of the Control Plane. You must upgrade it first.
 
@@ -188,7 +188,7 @@ For details on variables, see the [this](variables.tf) file.
 | **credentials_file_path**    | Either the path to or the contents of a service account key file in JSON format. | `null` |
 | **google_access_token**      | A temporary OAuth 2.0 access token obtained from the Google Authorization server, i.e. the Authorization: Bearer token used to authenticate HTTP requests to GCP APIs. | `null` |
 | **enable_legacy_kubeconfig** | Specifies whether to enable authentication using tokens/passwords/certificates or not. | `false` |
-| **k8s_version**              | Default Kubernetes version for the Control Plane. | `1.14` |
+| **kubernetes_version**       | Default Kubernetes version for the Control Plane. | `1.14` |
 | **private_nodes**            | Specifies whether to create a private cluster or not. This will remove public IPs from your Nodes and create a NAT Gateway/CloudNAT to allow internet access. | `true` |
 | **private_masters**          | If true, the Kubernetes API endpoint will not be public. This is still work in progress. **Do not use**. | `false` |
 | **gcloud_path**             | The path to your gcloud client binary. | `gcloud` |

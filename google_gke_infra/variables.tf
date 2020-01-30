@@ -35,7 +35,7 @@ variable "enable_legacy_kubeconfig" {
   default     = false
 }
 
-variable "k8s_version" {
+variable "kubernetes_version" {
   description = "Default K8s version for the Control Plane. See: https://www.terraform.io/docs/providers/google/r/container_cluster.html#min_master_version"
   default     = "1.14"
 }

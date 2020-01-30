@@ -15,7 +15,7 @@ resource "google_container_cluster" "cluster" {
   enable_tpu                  = lookup(var.extras, "enable_tpu", false)
   enable_legacy_abac          = var.enable_legacy_kubeconfig
   logging_service             = lookup(var.k8s_options, "logging_service", "none")
-  min_master_version          = var.k8s_version
+  min_master_version          = var.kubernetes_version
   monitoring_service          = lookup(var.k8s_options, "monitoring_service", "none")
   remove_default_node_pool    = var.remove_default_node_pool
   # workload_identity_config = # TODO
