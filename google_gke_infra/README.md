@@ -98,7 +98,7 @@ Have a look at the basic Terraform module configuration:
 ```hcl
 module "k8s" {
   source  = "git::https://github.com/kyma-incubator/terraform-modules//google_gke_infra?ref=v0.0.1"
-  name    = "${var.name}"
+  name    = "${var.cluster_name}"
   project = "${var.project}"
   region  = "${var.region}"
   private_nodes = true  # This will disable public IPs from the nodes
@@ -176,8 +176,8 @@ For details on variables, see the [this](variables.tf) file.
 
 | Variable  | Description                                  |
 | :-------- | :------------------------------------------- |
-| **name**   | The name to use as a prefix for all the resources. |
-| **region**  | The region that hosts the cluster. Each Node will be put in a different availability zone in the region for HA. |
+| **cluster_name** | The name to use as a prefix for all the resources. |
+| **region**       | The region that hosts the cluster. Each Node will be put in a different availability zone in the region for HA. |
 
 ### Optional variables
 

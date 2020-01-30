@@ -2,7 +2,7 @@
 ##########################################################
 resource "google_container_cluster" "cluster" {
   provider                    = google-beta
-  name                        = var.name
+  name                        = var.cluster_name
   project                     = var.project
   location                    = var.region
   network                     = local.network_link
@@ -82,8 +82,8 @@ resource "google_container_cluster" "cluster" {
   }
 
   ip_allocation_policy {
-    cluster_secondary_range_name  = "${var.name}-k8s-pod"
-    services_secondary_range_name = "${var.name}-k8s-svc"
+    cluster_secondary_range_name  = "${var.cluster_name}-k8s-pod"
+    services_secondary_range_name = "${var.cluster_name}-k8s-svc"
   }
 
   lifecycle {
@@ -170,7 +170,7 @@ resource "google_container_node_pool" "pools" {
   count              = length(var.node_pools)
   project            = var.project
   location           = var.region
-  name               = lookup(var.node_pools[count.index], "name", format("%s-%d", var.name, count.index))
+  name               = lookup(var.node_pools[count.index], "name", format("%s-%d", var.cluster_name, count.index))
   initial_node_count = lookup(var.node_pools[count.index], "initial_node_count", 1)
   max_pods_per_node  = lookup(var.node_pools[count.index], "max_pods_per_node", 110)
   # Node version rules:
@@ -208,7 +208,7 @@ resource "google_container_node_pool" "pools" {
     oauth_scopes    = var.oauth_scopes
     preemptible     = lookup(var.node_pools[count.index], "preemptible", false)
     service_account = var.service_account == null ? google_service_account.sa[0].email : var.service_account
-    tags            = concat(list(var.name), lookup(var.node_pools[count.index], "node_tags", []))
+    tags            = concat(list(var.cluster_name), lookup(var.node_pools[count.index], "node_tags", []))
 
 
     # TODO add option to define flexible taints map for each pool if needed.

@@ -1,6 +1,6 @@
 # Required
 ##########################################################
-variable "name" {
+variable "cluster_name" {
   description = "Name to use as a prefix to all the resources."
 }
 
