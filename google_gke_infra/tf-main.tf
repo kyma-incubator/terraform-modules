@@ -7,7 +7,7 @@ terraform {
 provider "google" {
   version      = "~> 2.7"
   region       = var.region
-  credentials  = var.google_credentials
+  credentials  = var.credentials_file_path
   access_token = var.google_access_token
 }
 
@@ -16,7 +16,7 @@ provider "google" {
 provider "google-beta" {
   version      = "~> 2.7"
   region       = var.region
-  credentials  = var.google_credentials
+  credentials  = var.credentials_file_path
   access_token = var.google_access_token
 }
 
@@ -28,7 +28,7 @@ data "google_client_config" "gcloud" {}
 ##########################################################
 resource "google_compute_network" "vpc" {
   count                   = var.network_name == null ? 1 : 0
-  name                    = var.name
+  name                    = var.cluster_name
   project                 = var.project
   auto_create_subnetworks = "false"
 }
@@ -36,7 +36,7 @@ resource "google_compute_network" "vpc" {
 # Subnets
 ##########################################################
 resource "google_compute_subnetwork" "subnet" {
-  name                     = var.name
+  name                     = var.cluster_name
   project                  = var.project
   network                  = local.network_link
   region                   = var.region
@@ -46,12 +46,12 @@ resource "google_compute_subnetwork" "subnet" {
 
   # enable_flow_logs = "${var.enable_flow_logs}" # TODO
   secondary_ip_range {
-    range_name    = "${var.name}-k8s-pod"
+    range_name    = "${var.cluster_name}-k8s-pod"
     ip_cidr_range = var.k8s_ip_ranges["pod_cidr"]
   }
 
   secondary_ip_range {
-    range_name    = "${var.name}-k8s-svc"
+    range_name    = "${var.cluster_name}-k8s-svc"
     ip_cidr_range = var.k8s_ip_ranges["svc_cidr"]
   }
 }
@@ -60,8 +60,8 @@ resource "google_compute_subnetwork" "subnet" {
 ##########################################################
 resource "google_service_account" "sa" {
   count        = var.service_account == null ? 1 : 0
-  account_id   = var.name
-  display_name = "${var.name} SA"
+  account_id   = var.cluster_name
+  display_name = "${var.cluster_name} SA"
   project      = var.project
 }
 

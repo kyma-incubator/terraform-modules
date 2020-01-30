@@ -4,7 +4,7 @@ resource "null_resource" "k8s_credentials" {
   count = var.deploy["network_policy"] || var.deploy["pod_security_policy"] || length(var.k8s_resources_to_create) >= 1 ? 1 : 0 == 1 ? 1 : 0
 
   triggers = {
-    host                   = md5(var.name)
+    host                   = md5(var.cluster_name)
     endpoint               = md5(google_container_cluster.cluster.endpoint)
     cluster_ca_certificate = md5(google_container_cluster.cluster.master_auth[0].cluster_ca_certificate, )
     netpolicy              = filemd5(format("%s/%s", path.module, "k8s_resources/networkPolicies/cronjob.yaml", ), )
@@ -15,7 +15,7 @@ resource "null_resource" "k8s_credentials" {
   provisioner "local-exec" {
     command = <<EOF
 set -euo pipefail
-gcloud container clusters get-credentials "${var.name}" --region="${var.region}" --project="${var.project}"
+gcloud container clusters get-credentials "${var.cluster_name}" --region="${var.region}" --project="${var.project}"
 set +o errexit
 CRB_OUTPUT=$(kubectl create clusterrolebinding "$(gcloud config get-value account)" --clusterrole=cluster-admin --user="$(gcloud config get-value account)" 2>&1)
 set -o errexit
@@ -36,7 +36,7 @@ resource "null_resource" "network_policies" {
   depends_on = [null_resource.k8s_credentials]
 
   triggers = {
-    host                   = md5(var.name)
+    host                   = md5(var.cluster_name)
     endpoint               = md5(google_container_cluster.cluster.endpoint)
     cluster_ca_certificate = md5(google_container_cluster.cluster.master_auth[0].cluster_ca_certificate, )
     netpolicy              = filemd5(format("%s/%s", path.module, "k8s_resources/networkPolicies/cronjob.yaml", ), )
@@ -54,7 +54,7 @@ resource "null_resource" "podsec_policies" {
   depends_on = [null_resource.k8s_credentials]
 
   triggers = {
-    host                   = md5(var.name)
+    host                   = md5(var.cluster_name)
     endpoint               = md5(google_container_cluster.cluster.endpoint)
     cluster_ca_certificate = md5(google_container_cluster.cluster.master_auth[0].cluster_ca_certificate, )
     psp                    = filemd5(format("%s/%s", path.module, "k8s_resources/podsecurityPolicies/podSecurityPolicies.yaml", ), )
@@ -75,7 +75,7 @@ resource "null_resource" "create_k8s_resources" {
   depends_on = [null_resource.k8s_credentials]
 
   triggers = {
-    host                   = md5(var.name)
+    host                   = md5(var.cluster_name)
     endpoint               = md5(google_container_cluster.cluster.endpoint)
     cluster_ca_certificate = md5(google_container_cluster.cluster.master_auth[0].cluster_ca_certificate, )
     new_resources          = md5(join(",", var.k8s_resources_to_create))
@@ -96,7 +96,7 @@ resource "null_resource" "destroy_k8s_resources" {
   depends_on = [null_resource.k8s_credentials]
 
   triggers = {
-    host                   = md5(var.name)
+    host                   = md5(var.cluster_name)
     endpoint               = md5(google_container_cluster.cluster.endpoint)
     cluster_ca_certificate = md5(google_container_cluster.cluster.master_auth[0].cluster_ca_certificate, )
     new_resources          = md5(join(",", var.k8s_resources_to_destroy))

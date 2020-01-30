@@ -12,7 +12,7 @@ Use the following links to navigate through the document.
     - [Use the cluster as a Terraform provider](#use-the-cluster-as-a-terraform-provider)
     - [Deploy custom Kubernets resources](#deploy-custom-kubernetes-resources)
     - [Upgrade a cluster](#upgrade-a-cluster)
-      - [Update **k8s_version**](#update-k8sversion)
+      - [Update **kubernetes_version**](#update-kubernetes-version)
       - [Update **node_version**](#update-nodeversion)
   - [Variables](#variables)
     - [Required variables](#required-variables)
@@ -97,8 +97,8 @@ Have a look at the basic Terraform module configuration:
 
 ```hcl
 module "k8s" {
-  source  = "git::https://github.com/kyma-incubator/terraform-modules//google_gke_infra?ref=v0.0.1"
-  name    = "${var.name}"
+  source  = "git::https://github.com/kyma-incubator/terraform-modules//google_gke_infra?ref=v0.0.2"
+  name    = "${var.cluster_name}"
   project = "${var.project}"
   region  = "${var.region}"
   private_nodes = true  # This will disable public IPs from the nodes
@@ -156,9 +156,9 @@ module "k8s" {
 
 The GKE module exposes two variables to allow the separate upgrade of the Control Plane and Nodes.
 
-#### Update **k8s_version**
+#### Update **kubernetes-version**
 
->**NOTE:** This value configures the version of the Control Plane. You must upgrade it first. 
+>**NOTE:** This value configures the version of the Control Plane. You must upgrade it first.
 
 The updating operation takes about 15 minutes. Once it is done, re-run `terraform plan` to validate that Terraform does not need any further changes. If the node pools are configured for auto upgrade, GCP automatically upgrades the Nodes within the upcoming weeks to match the master version, so that you don't need to manually adjust the **node_version**.
 
@@ -176,8 +176,8 @@ For details on variables, see the [this](variables.tf) file.
 
 | Variable  | Description                                  |
 | :-------- | :------------------------------------------- |
-| **name**   | The name to use as a prefix for all the resources. |
-| **region**  | The region that hosts the cluster. Each Node will be put in a different availability zone in the region for HA. |
+| **cluster_name** | The name to use as a prefix for all the resources. |
+| **region**       | The region that hosts the cluster. Each Node will be put in a different availability zone in the region for HA. |
 
 ### Optional variables
 
@@ -185,10 +185,10 @@ For details on variables, see the [this](variables.tf) file.
 | :------------------------- | :---------------------------------- | :---------------------------------------------------- |
 | **project**                  | The ID of the Google project to which the resource belongs. | Value configured in `gcloud` client. |
 | **description**             | A description to apply to all resources. | `Managed by Terraform` |
-| **google_credentials**      | Either the path to or the contents of a service account key file in JSON format. | `null` |
+| **credentials_file_path**    | Either the path to or the contents of a service account key file in JSON format. | `null` |
 | **google_access_token**      | A temporary OAuth 2.0 access token obtained from the Google Authorization server, i.e. the Authorization: Bearer token used to authenticate HTTP requests to GCP APIs. | `null` |
 | **enable_legacy_kubeconfig** | Specifies whether to enable authentication using tokens/passwords/certificates or not. | `false` |
-| **k8s_version**              | Default Kubernetes version for the Control Plane. | `1.14` |
+| **kubernetes_version**       | Default Kubernetes version for the Control Plane. | `1.15` |
 | **private_nodes**            | Specifies whether to create a private cluster or not. This will remove public IPs from your Nodes and create a NAT Gateway/CloudNAT to allow internet access. | `true` |
 | **private_masters**          | If true, the Kubernetes API endpoint will not be public. This is still work in progress. **Do not use**. | `false` |
 | **gcloud_path**             | The path to your gcloud client binary. | `gcloud` |
@@ -311,9 +311,9 @@ Configurable timeout values for the various cluster operations.
 
 | Variable  | Description                                         | Default  |
 | :-------- | :-------------------------------------------------- | :------- |
-| **create**  | The default timeout for a cluster create operation. | `20m` |
-| **update**  | The default timeout for a cluster update operation. | `360m` |
-| **delete**  | The default timeout for a cluster delete operation. | `20m` |
+| **create_timeout**  | The default timeout for a cluster create operation. | `20m` |
+| **update_timeout**  | The default timeout for a cluster update operation. | `360m` |
+| **delete_timeout**  | The default timeout for a cluster delete operation. | `20m` |
 
 ### Output Variables
 

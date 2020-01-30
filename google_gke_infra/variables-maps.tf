@@ -59,8 +59,8 @@ variable "timeouts" {
   description = "Configurable timeout values for the various cluster operations."
 
   default = {
-    create = "20m"  # The default timeout for a cluster create operation.
-    update = "360m" # The default timeout for a cluster update operation (6 hours - node upgrades can take a long time)
-    delete = "20m"  # The default timeout for a cluster delete operation.
+    create_timeout = "20m"  # The default timeout for a cluster create operation.
+    update_timeout = "360m" # The default timeout for a cluster update operation (6 hours - node upgrades can take a long time)
+    delete_timeout = "20m"  # The default timeout for a cluster delete operation.
   }
 }

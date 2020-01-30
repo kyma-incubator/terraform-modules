@@ -1,7 +1,7 @@
 # Create an external NAT IP
 resource "google_compute_address" "nat" {
   count   = var.private_nodes && var.cloud_nat && var.nat_ip_allocation == "MANUAL_ONLY" ? 1 : 0
-  name    = "${var.name}-nat"
+  name    = "${var.cluster_name}-nat"
   project = var.project
   region  = var.region
 }
@@ -9,7 +9,7 @@ resource "google_compute_address" "nat" {
 # Create a NAT router so the nodes can reach DockerHub, etc
 resource "google_compute_router" "router" {
   count       = var.private_nodes && var.cloud_nat ? 1 : 0
-  name        = var.name
+  name        = var.cluster_name
   network     = local.network_link
   project     = var.project
   region      = var.region
@@ -22,7 +22,7 @@ resource "google_compute_router" "router" {
 
 resource "google_compute_router_nat" "nat" {
   count                              = var.private_nodes && var.cloud_nat ? 1 : 0
-  name                               = var.name
+  name                               = var.cluster_name
   project                            = var.project
   router                             = google_compute_router.router[0].name
   region                             = var.region
@@ -34,8 +34,8 @@ resource "google_compute_router_nat" "nat" {
     name                    = google_compute_subnetwork.subnet.self_link
     source_ip_ranges_to_nat = ["PRIMARY_IP_RANGE", "LIST_OF_SECONDARY_IP_RANGES"]
     secondary_ip_range_names = [
-      "${var.name}-k8s-pod",
-      "${var.name}-k8s-svc",
+      "${var.cluster_name}-k8s-pod",
+      "${var.cluster_name}-k8s-svc",
     ]
   }
 
@@ -55,12 +55,12 @@ resource "google_compute_router_nat" "nat" {
 ##########################################################
 resource "google_compute_route" "gtw_route" {
   count            = var.private_nodes && ! var.cloud_nat ? 1 : 0
-  name             = var.name
+  name             = var.cluster_name
   depends_on       = [google_compute_subnetwork.subnet]
   dest_range       = google_container_cluster.cluster.endpoint
   network          = local.network_link
   next_hop_gateway = "default-internet-gateway"
   priority         = 700
   project          = var.project
-  tags             = concat(list(var.name), var.node_pools[*].node_tags)
+  tags             = concat(list(var.cluster_name), var.node_pools[*].node_tags)
 }

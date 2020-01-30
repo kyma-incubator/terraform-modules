@@ -1,6 +1,6 @@
 # Required
 ##########################################################
-variable "name" {
+variable "cluster_name" {
   description = "Name to use as a prefix to all the resources."
 }
 
@@ -19,7 +19,7 @@ variable "description" {
   default = "Managed by Terraform"
 }
 
-variable "google_credentials" {
+variable "credentials_file_path" {
   description = "Either the path to or the contents of a service account key file in JSON format."
   default     = null
 }
@@ -35,9 +35,9 @@ variable "enable_legacy_kubeconfig" {
   default     = false
 }
 
-variable "k8s_version" {
+variable "kubernetes_version" {
   description = "Default K8s version for the Control Plane. See: https://www.terraform.io/docs/providers/google/r/container_cluster.html#min_master_version"
-  default     = "1.14"
+  default     = "1.15"
 }
 
 variable "private_nodes" {

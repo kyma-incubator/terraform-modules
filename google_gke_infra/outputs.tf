@@ -67,18 +67,18 @@ clusters:
 - cluster:
     server: https://${google_container_cluster.cluster.endpoint}
     certificate-authority-data: ${google_container_cluster.cluster.master_auth[0].cluster_ca_certificate}
-  name: gke-${var.name}
+  name: gke-${var.cluster_name}
 users:
-- name: gke-${var.name}
+- name: gke-${var.cluster_name}
   user:
     client-certificate-data: ${google_container_cluster.cluster.master_auth[0].client_certificate}
     client-key-data: ${google_container_cluster.cluster.master_auth[0].client_key}
 contexts:
 - context:
-    cluster: gke-${var.name}
-    user: gke-${var.name}
-  name: gke-${var.name}
-current-context: gke-${var.name}
+    cluster: gke-${var.cluster_name}
+    user: gke-${var.cluster_name}
+  name: gke-${var.cluster_name}
+current-context: gke-${var.cluster_name}
 
 KUBECONFIG
 
@@ -92,9 +92,9 @@ clusters:
 - cluster:
     server: https://${google_container_cluster.cluster.endpoint}
     certificate-authority-data: ${google_container_cluster.cluster.master_auth[0].cluster_ca_certificate}
-  name: gke-${var.name}
+  name: gke-${var.cluster_name}
 users:
-- name: gke-${var.name}
+- name: gke-${var.cluster_name}
   user:
     auth-provider:
       config:
@@ -105,10 +105,10 @@ users:
       name: gcp
 contexts:
 - context:
-    cluster: gke-${var.name}
-    user: gke-${var.name}
-  name: gke-${var.name}
-current-context: gke-${var.name}
+    cluster: gke-${var.cluster_name}
+    user: gke-${var.cluster_name}
+  name: gke-${var.cluster_name}
+current-context: gke-${var.cluster_name}
 
 KUBECONFIG
 }
