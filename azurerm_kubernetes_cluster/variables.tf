@@ -15,28 +15,33 @@ variable "client_secret" {
   type        = string
   description = "Kubernetes service principal client secret and azurerm provider client_secret"
 }
-variable "dns_prefix" {
-  type        = string
-  description = "DNS prefix of the 'azurerm_kubernetes_cluster'"
-}
 variable "cluster_name" {
   type        = string
   description = "The name of the 'azurerm_kubernetes_cluster'"
 }
+variable "location" {
+  type        = string
+  description = "The location of the kubernetes cluster deployment"
+}
+
+### optional vars (defaulting to var.cluster_name) ###
 variable "resource_group" {
   type        = string
   description = "The name of the resource group within the virtual network"
-}
-variable "location" {
-  type        = string
-  description = "The location of the kubernetes clutser deployment"
+  default     = ""
 }
 variable "log_analytics_workspace_name" {
-  type = string
+  type        = string
   description = "The name of the Log Analytics Workspace"
+  default     = ""
+}
+variable "dns_prefix" {
+  type        = string
+  description = "DNS prefix of the 'azurerm_kubernetes_cluster'"
+  default     = ""
 }
 
-### optional vars ###
+### optional vars  ###
 variable "tags" {
   type        = map(string)
   description = "Tags to assign to the 'azurerm_kubernetes_cluster'"
