@@ -311,9 +311,9 @@ Configurable timeout values for the various cluster operations.
 
 | Variable  | Description                                         | Default  |
 | :-------- | :-------------------------------------------------- | :------- |
-| **create**  | The default timeout for a cluster create operation. | `20m` |
-| **update**  | The default timeout for a cluster update operation. | `360m` |
-| **delete**  | The default timeout for a cluster delete operation. | `20m` |
+| **create_timeout**  | The default timeout for a cluster create operation. | `20m` |
+| **update_timeout**  | The default timeout for a cluster update operation. | `360m` |
+| **delete_timeout**  | The default timeout for a cluster delete operation. | `20m` |
 
 ### Output Variables
 

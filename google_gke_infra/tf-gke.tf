@@ -152,9 +152,9 @@ resource "google_container_cluster" "cluster" {
   # }
 
   timeouts {
-    create = var.timeouts["create"]
-    update = var.timeouts["update"]
-    delete = var.timeouts["delete"]
+    create = var.timeouts["create_timeout"]
+    update = var.timeouts["update_timeout"]
+    delete = var.timeouts["delete_timeout"]
   }
 
   vertical_pod_autoscaling {
@@ -220,8 +220,8 @@ resource "google_container_node_pool" "pools" {
   }
 
   timeouts {
-    create = var.timeouts["create"]
-    update = var.timeouts["update"]
-    delete = var.timeouts["delete"]
+    create = var.timeouts["create_timeout"]
+    update = var.timeouts["update_timeout"]
+    delete = var.timeouts["delete_timeout"]
   }
 }
