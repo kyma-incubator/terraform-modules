@@ -19,7 +19,7 @@ Basic usage looks like this:
 
 ```hcl
 module "k8s" {
-  source  = "git::https://github.com/kyma-incubator/terraform-modules//google_gke_infra?ref=v0.0.1"
+  source  = "git::https://github.com/kyma-incubator/terraform-modules//google_gke_infra?ref=v0.0.2"
   name    = "${var.cluster_name}"
   project = "${var.project}"
   region  = "${var.region}"
