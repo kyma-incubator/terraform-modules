@@ -19,7 +19,7 @@ variable "description" {
   default = "Managed by Terraform"
 }
 
-variable "google_credentials" {
+variable "credentials_file_path" {
   description = "Either the path to or the contents of a service account key file in JSON format."
   default     = null
 }

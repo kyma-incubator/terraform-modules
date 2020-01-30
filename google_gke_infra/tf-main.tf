@@ -7,7 +7,7 @@ terraform {
 provider "google" {
   version      = "~> 2.7"
   region       = var.region
-  credentials  = var.google_credentials
+  credentials  = var.credentials_file_path
   access_token = var.google_access_token
 }
 
@@ -16,7 +16,7 @@ provider "google" {
 provider "google-beta" {
   version      = "~> 2.7"
   region       = var.region
-  credentials  = var.google_credentials
+  credentials  = var.credentials_file_path
   access_token = var.google_access_token
 }
 

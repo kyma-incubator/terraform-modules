@@ -158,7 +158,7 @@ The GKE module exposes two variables to allow the separate upgrade of the Contro
 
 #### Update **k8s_version**
 
->**NOTE:** This value configures the version of the Control Plane. You must upgrade it first. 
+>**NOTE:** This value configures the version of the Control Plane. You must upgrade it first.
 
 The updating operation takes about 15 minutes. Once it is done, re-run `terraform plan` to validate that Terraform does not need any further changes. If the node pools are configured for auto upgrade, GCP automatically upgrades the Nodes within the upcoming weeks to match the master version, so that you don't need to manually adjust the **node_version**.
 
@@ -185,7 +185,7 @@ For details on variables, see the [this](variables.tf) file.
 | :------------------------- | :---------------------------------- | :---------------------------------------------------- |
 | **project**                  | The ID of the Google project to which the resource belongs. | Value configured in `gcloud` client. |
 | **description**             | A description to apply to all resources. | `Managed by Terraform` |
-| **google_credentials**      | Either the path to or the contents of a service account key file in JSON format. | `null` |
+| **credentials_file_path**    | Either the path to or the contents of a service account key file in JSON format. | `null` |
 | **google_access_token**      | A temporary OAuth 2.0 access token obtained from the Google Authorization server, i.e. the Authorization: Bearer token used to authenticate HTTP requests to GCP APIs. | `null` |
 | **enable_legacy_kubeconfig** | Specifies whether to enable authentication using tokens/passwords/certificates or not. | `false` |
 | **k8s_version**              | Default Kubernetes version for the Control Plane. | `1.14` |
