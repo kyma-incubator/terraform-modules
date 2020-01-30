@@ -30,29 +30,36 @@ variable "client_secret" {
   type        = string
   description = "Kubernetes service principal client secret and azurerm provider client_secret"
 }
-variable "dns_prefix" {
-  type        = string
-  description = "DNS prefix of the 'azurerm_kubernetes_cluster'"
-}
 variable "cluster_name" {
   type        = string
   description = "The name of the 'azurerm_kubernetes_cluster'"
-}
-variable "resource_group" {
-  type        = string
-  description = "The name of the resource group within the virtual network"
 }
 variable "location" {
   type        = string
   description = "The location of the kubernetes cluster deployment"
 }
+```
+## Optional variables
+### Defaulting to var.cluster_name
+```hcl
+variable "resource_group" {
+  type        = string
+  description = "The name of the resource group within the virtual network"
+  default     = ""
+}
 variable "log_analytics_workspace_name" {
   type        = string
   description = "The name of the Log Analytics Workspace"
+  default     = ""
+}
+variable "dns_prefix" {
+  type        = string
+  description = "DNS prefix of the 'azurerm_kubernetes_cluster'"
+  default     = ""
 }
 ```
-## Optional variables
 ```hcl
+### Predefined values
 variable "tags" {
   type        = map(string)
   description = "Tags to assign to the 'azurerm_kubernetes_cluster'"
@@ -105,10 +112,7 @@ variables:
   subscription_id: "<%= ENV['AZURE_SUBSCRIPTION_ID'] %>"
   tenant_id: "<%= ENV['AZURE_TENANT_ID'] %>"
   cluster_name: "kitchen-test"
-  dns_prefix: "kitchen-dns"
   location: "northeurope"
-  log_analytics_workspace_name: "kitchen-ws"
-  resource_group: "kitchen-rg"
   
 provisioner:
   name: terraform

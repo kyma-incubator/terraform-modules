@@ -1,6 +1,6 @@
 # creating dedicated resource group for kubernetes
 resource "azurerm_resource_group" "k8s" {
-  name     = var.resource_group
+  name     = local.resource_group
   location = var.location
 }
 
@@ -11,7 +11,7 @@ resource "random_id" "log_analytics_workspace_name_suffix" {
 
 # create a Log Analytics (formally Operational Insights) Workspace
 resource "azurerm_log_analytics_workspace" "log-workspace" {
-  name                = "${var.log_analytics_workspace_name}-${random_id.log_analytics_workspace_name_suffix.dec}"
+  name                = "${local.log_analytics_workspace_name}-${random_id.log_analytics_workspace_name_suffix.dec}"
   location            = var.location
   resource_group_name = azurerm_resource_group.k8s.name
   sku                 = var.log_analytics_workspace_sku
@@ -35,7 +35,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   name                = var.cluster_name
   location            = azurerm_resource_group.k8s.location
   resource_group_name = azurerm_resource_group.k8s.name
-  dns_prefix          = var.dns_prefix
+  dns_prefix          = local.dns_prefix
   kubernetes_version  = var.kubernetes_version
 
   agent_pool_profile {
