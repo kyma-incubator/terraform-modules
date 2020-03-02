@@ -93,8 +93,12 @@ variable "agent_disk_size" {
 variable "log_analytics_workspace_sku" {
   type        = string
   description = "The pricing level of the Log Analytics workspace (https://azure.microsoft.com/pricing/details/monitor)"
-
   default     = "PerGB2018"
+}
+variable "aks_oms_agent" {
+  type        = bool
+  description = "Enable Log Analytics agent to monitor containers"
+  default     = false
 }
 ```
 ## Testing

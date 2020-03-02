@@ -51,7 +51,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   }
   addon_profile {
     oms_agent {
-      enabled                    = true
+      enabled                    = var.aks_oms_agent
       log_analytics_workspace_id = azurerm_log_analytics_workspace.log-workspace.id
     }
   }
